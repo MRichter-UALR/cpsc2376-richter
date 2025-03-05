@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 
-// Constants for the game
+// Constants for the game test
 const int BOARD_SIZE = 6; // Grid size (6x6)
 const char EMPTY = '-'; // Empty space on the board
 const char PLAYER1 = 'P'; // Player 1 car

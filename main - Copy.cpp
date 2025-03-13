@@ -3,9 +3,9 @@
 #include <cstdlib>
 #include <ctime>
 
-// Constants for the game
+// Constants for the game test
 const int BOARD_SIZE = 6; // Grid size (6x6)
-const char EMPTY = '-';   // Empty space on the board
+const char EMPTY = '-'; // Empty space on the board
 const char PLAYER1 = 'P'; // Player 1 car
 const char PLAYER2 = 'Q'; // Player 2 car
 const char OBSTACLE = 'X'; // Obstacle
@@ -13,7 +13,6 @@ const char OBSTACLE = 'X'; // Obstacle
 enum class GameState { ONGOING, PLAYER1_WINS, PLAYER2_WINS, DRAW };
 
 // Function prototypes
-void showInstructions();
 void makeBoard(std::vector<std::vector<char>>& board);
 void printBoard(const std::vector<std::vector<char>>& board);
 bool isValidMove(const std::vector<std::vector<char>>& board, int x, int y);
@@ -26,9 +25,6 @@ int main() {
 
     char playAgain = 'y';
     while (playAgain == 'y' || playAgain == 'Y') {
-        // Show game instructions before starting
-        showInstructions();
-
         // Initialize the board
         std::vector<std::vector<char>> board(BOARD_SIZE, std::vector<char>(BOARD_SIZE, EMPTY));
         makeBoard(board);
@@ -36,8 +32,8 @@ int main() {
 
         // Game Loop
         GameState state = GameState::ONGOING;
-        int player1X = 0, player1Y = 0; // Player 1 starts at (0,0)
-        int player2X = BOARD_SIZE - 1, player2Y = 0; // Player 2 starts at (BOARD_SIZE-1,0)
+        int player1X = 0, player1Y = 0; // Player 1 starts at (0, 0)
+        int player2X = BOARD_SIZE - 1, player2Y = 0; // Player 2 starts at (BOARD_SIZE-1, 0)
         int turn = 0; // 0 for Player 1, 1 for Player 2
 
         while (state == GameState::ONGOING) {
@@ -47,21 +43,26 @@ int main() {
             int x = (turn == 0) ? player1X : player2X;
             int y = (turn == 0) ? player1Y : player2Y;
 
-            std::cout << ((turn == 0) ? "Player 1's turn (P):\n" : "Player 2's turn (Q):\n");
+            if (turn == 0) {
+                std::cout << "Player 1's turn (P):\n";
+            } else {
+                std::cout << "Player 2's turn (Q):\n";
+            }
+
             std::cout << "Enter direction (1: up, 2: down, 3: left, 4: right): ";
             std::cin >> direction;
 
             int newX = x, newY = y;
-
+            
             // Determine new coordinates based on the direction
             switch (direction) {
-            case 1: newX = x - 1; break; // Up
-            case 2: newX = x + 1; break; // Down
-            case 3: newY = y - 1; break; // Left
-            case 4: newY = y + 1; break; // Right
-            default:
-                std::cout << "Invalid input. Please enter a number between 1 and 4.\n";
-                continue;
+                case 1: newX = x - 1; break; // Up
+                case 2: newX = x + 1; break; // Down
+                case 3: newY = y - 1; break; // Left
+                case 4: newY = y + 1; break; // Right
+                default: 
+                    std::cout << "Invalid input. Please enter a number between 1 and 4.\n";
+                    continue;
             }
 
             if (isValidMove(board, newX, newY)) {
@@ -69,14 +70,12 @@ int main() {
                 if (turn == 0) {
                     player1X = newX;
                     player1Y = newY;
-                }
-                else {
+                } else {
                     player2X = newX;
                     player2Y = newY;
                 }
                 state = gameStatus(board);
-            }
-            else {
+            } else {
                 std::cout << "Invalid move. Try again.\n";
             }
 
@@ -87,11 +86,9 @@ int main() {
         printBoard(board);
         if (state == GameState::PLAYER1_WINS) {
             std::cout << "Player 1 wins!\n";
-        }
-        else if (state == GameState::PLAYER2_WINS) {
+        } else if (state == GameState::PLAYER2_WINS) {
             std::cout << "Player 2 wins!\n";
-        }
-        else {
+        } else {
             std::cout << "Game is a draw.\n";
         }
 
@@ -101,19 +98,6 @@ int main() {
 
     std::cout << "Thanks for playing!\n";
     return 0;
-}
-
-// Function to show game instructions
-void showInstructions() {
-    std::cout << "\n** Welcome to Race-To-The-Finish! **\n";
-    std::cout << "In this two-player game, your goal is to be the first to reach the rightmost column on a 6x6 grid.\n";
-    std::cout << "Player 1 (P) starts at the top-left corner (0,0), and Player 2 (Q) starts at the bottom-left corner (5,0).\n";
-    std::cout << "Each turn, players move one space in one of four directions: Up (1), Down (2), Left (3), or Right (4).\n";
-    std::cout << "However, you can’t move off the board, onto obstacles (X), or into the other player.\n\n";
-    std::cout << "Inspired by Frogger, this game is a race that requires quick thinking and strategy.\n";
-    std::cout << "The first player to reach the far-right column wins!\n\n";
-    std::cout << "Press Enter to start the game...";
-    std::cin.ignore();  // Waits for the player to press Enter before continuing
 }
 
 // Function definitions
@@ -185,8 +169,7 @@ void placeObstacles(std::vector<std::vector<char>>& board) {
         int y = rand() % BOARD_SIZE;
         if (board[x][y] == EMPTY) {
             board[x][y] = OBSTACLE;
-        }
-        else {
+        } else {
             i--; // Retry if the space is not empty
         }
     }

@@ -87,14 +87,16 @@ int main() {
 
     std::vector<Loan> loans;
 
-    games[0].checkout();
+    // Sample transactions
+    games[0].checkout();  // Alice borrows Catan
     loans.emplace_back(&games[0], &customers[0], "2025-05-17");
 
-    games[1].checkout();
+    games[1].checkout();  // Bob borrows Ticket to Ride
     loans.emplace_back(&games[1], &customers[1], "2025-05-18");
 
-    games[0].returnCopy();
+    games[0].returnCopy();  // Alice returns Catan
 
+    // Display results
     listGames(games);
     listLoans(loans);
 

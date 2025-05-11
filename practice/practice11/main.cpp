@@ -56,7 +56,6 @@ public:
     }
 };
 
-// Function to list all games and their availability
 void listGames(const std::vector<Game>& games) {
     std::cout << "\nGame Inventory:\n";
     for (const auto& game : games) {
@@ -66,7 +65,6 @@ void listGames(const std::vector<Game>& games) {
     }
 }
 
-// Function to list all active loans
 void listLoans(const std::vector<Loan>& loans) {
     std::cout << "\nActive Loans:\n";
     for (const auto& loan : loans) {
@@ -89,17 +87,14 @@ int main() {
 
     std::vector<Loan> loans;
 
-    // Simulate some lending
     games[0].checkout();
     loans.emplace_back(&games[0], &customers[0], "2025-05-17");
 
     games[1].checkout();
     loans.emplace_back(&games[1], &customers[1], "2025-05-18");
 
-    // Simulate a return
     games[0].returnCopy();
 
-    // Output results
     listGames(games);
     listLoans(loans);
 

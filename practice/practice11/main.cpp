@@ -1,10 +1,9 @@
-﻿// main.cpp
-// Practice11 – Board Game Lending System
+// main.cpp
+// Practice11 � Board Game Lending System
 
 #include <iostream>
 #include <vector>
 #include <string>
-#include <iomanip>
 
 class Game {
 public:
